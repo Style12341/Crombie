@@ -7,7 +7,7 @@ namespace BibliotecaWebAPI.Persistance
     public class ExcelReader
     {
         // Classes that use this class should know the data structure
-        private static string FilePath = @"C:\Users\soyel\Source\Repos\Style12341\Crombie\BibliotecaWebAPI\Public\BibliotecaBaseDatos.xlsx";
+        private static string FilePath = @".\Public\BibliotecaBaseDatos.xlsx";
         private static int DATA_START_ROW = 2;
         public static void SetFilePath(string path)
         {
