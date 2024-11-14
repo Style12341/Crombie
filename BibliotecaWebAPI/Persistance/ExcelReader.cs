@@ -142,9 +142,10 @@ namespace BibliotecaWebAPI.Persistance
                 if (id == (int)data[0])
                 {
                     found = true;
-                    for (int j = 1; j <= lastColumnUsed; j++)
+                    for (int j = 0; j < lastColumnUsed; j++)
                     {
-                        worksheet.Cell(i, j).Value = data[j];
+                        int jExcel = j + 1;
+                        worksheet.Cell(i, jExcel).Value = data[j];
                     }
                     workbook.Save();
                     break;

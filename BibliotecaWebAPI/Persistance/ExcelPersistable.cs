@@ -14,7 +14,12 @@ namespace BibliotecaWebAPI.Persistance
         }
         public T GetDataById(int id)
         {
-            return Deserialize(ExcelReader.GetDataById(WORKSHEET_INDEX, id));
+            var data = ExcelReader.GetDataById(WORKSHEET_INDEX, id);
+            if (data.Count == 0)
+            {
+                return null;
+            }
+            return Deserialize(data);
         }
         public List<T> GetDataByIdsList(List<int> ids)
         {

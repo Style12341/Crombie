@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BibliotecaApp;
+using BibliotecaWebAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,44 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
+        private readonly UsuarioService _service = new UsuarioService();
         // GET: api/<UsuarioController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+
+            List<Usuario> usuarios = _service.GetAllUsers();
+            if (usuarios.Count == 0)
+            {
+                return new List<string> { "No hay usuarios" };
+            }
+            return usuarios.Select(u => JsonSerializer.Serialize<Usuario>(u));
         }
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+           Usuario user = _service.GetUser(id);
+            if (user == null)
+            {
+                return "No se encontró el usuario";
+            }
+            return JsonSerializer.Serialize<Usuario>(user);
         }
-
-        // POST api/<UsuarioController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<UsuarioController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
         // DELETE api/<UsuarioController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _service.DeleteUser(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            return Ok("Usuario deleted successfully.");
         }
     }
 }

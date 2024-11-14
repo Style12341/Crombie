@@ -15,27 +15,28 @@ namespace BibliotecaWebAPI.Persistance
 
         public Usuario Create(Usuario obj)
         {
-            throw new NotImplementedException();
+            return InsertData([obj]).First();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            DeleteDataById(id);
         }
 
         public Usuario Update(Usuario obj)
         {
-            throw new NotImplementedException();
+            UpdateData(obj);
+            return obj;
         }
 
         public Usuario Get(int id)
         {
-            throw new NotImplementedException();
+            return GetDataById(id);
         }
 
         public List<Usuario> GetAll()
         {
-            throw new NotImplementedException();
+            return GetData();
         }
 
         public override List<XLCellValue> Serialize(Usuario obj)
@@ -46,10 +47,14 @@ namespace BibliotecaWebAPI.Persistance
            [
                obj.Id,
                obj.Nombre,
-               obj is Profesor ? "Profesor" : "Estudiante",
+               obj.UserType,
                librosPrestadosString
             ];
             return row.ToList();
+        }
+        public List<Usuario> GetAllByIds(List<int> ids)
+        {
+            return GetDataByIdsList(ids);
         }
         public override Usuario Deserialize(List<XLCellValue> row)
         {
@@ -60,7 +65,17 @@ namespace BibliotecaWebAPI.Persistance
             int id = (int)row[ID_INDEX];
             string nombre = (string)row[NOMBRE_INDEX];
             string tipo = (string)row[TIPO_INDEX];
-            List<int> librosPrestadosIds = ((string)row[LIBROS_INDEX]).Split(",").Select(int.Parse).ToList();
+            List<int> librosPrestadosIds;
+            if (row[LIBROS_INDEX].IsNumber)
+                librosPrestadosIds = [(int)row[LIBROS_INDEX]];
+            else
+            {
+                string libros = (string)row[LIBROS_INDEX];
+                if (libros == "")
+                    librosPrestadosIds = [];
+                else
+                    librosPrestadosIds = ((string)row[LIBROS_INDEX]).Split(",").Select(int.Parse).ToList();
+            }
             IDAO<Libro> libroDAO = new LibroDAOExcel();
             List<Libro> librosPrestados = libroDAO.GetAllByIds(librosPrestadosIds);
             if (tipo == "Profesor")
@@ -71,11 +86,6 @@ namespace BibliotecaWebAPI.Persistance
             {
                 return new Estudiante(id, nombre, librosPrestados);
             }
-        }
-
-        public List<Usuario> GetAllByIds(List<int> ids)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Persistance;
+using BibliotecaWebAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,13 +11,13 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class LibroController : ControllerBase
     {
-        private readonly IDAO<Libro> _dao = new LibroDAOExcel();
+        private readonly LibroService _service = new LibroService();
 
         // GET: api/<LibroController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            List<Libro> libros = _dao.GetAll();
+            List<Libro> libros = _service.GetAllBooks();
             if (libros.Count == 0)
             {
                 return new List<string> { "No hay libros" };
@@ -28,7 +29,11 @@ namespace BibliotecaWebAPI.Controllers
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            Libro? libro = _dao.Get(id);
+            Libro? libro = _service.GetBook(id);
+            if (libro == null)
+            {
+                return "No se encontró el libro";
+            }
             return JsonSerializer.Serialize<Libro>(libro);
         }
 
@@ -43,7 +48,7 @@ namespace BibliotecaWebAPI.Controllers
                 {
                     return BadRequest("Invalid JSON data.");
                 }
-                libro = _dao.Create(libro);
+                libro = _service.CreateBook(libro);
                 return Ok(JsonSerializer.Serialize<Libro>(libro));
             }
             catch (JsonException ex)
@@ -64,7 +69,7 @@ namespace BibliotecaWebAPI.Controllers
                     return BadRequest("Invalid JSON data.");
                 }
                 libro.Id = id;
-                _dao.Update(libro);
+                _service.UpdateBook(libro);
                 return Ok("Libro updated successfully.");
             }
             catch (JsonException ex)
@@ -77,7 +82,14 @@ namespace BibliotecaWebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _dao.Delete(id);
+            try
+            {
+                _service.DeleteBook(id);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok("Libro deleted successfully.");
         }
     }

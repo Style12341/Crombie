@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace BibliotecaApp
 {
-    public class Usuario
+    public abstract class Usuario
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
 
+        public abstract string UserType { get;}
         public List<Libro> LibrosPrestados { get; set; } = [];
         public Usuario() { }
         public Usuario(int id, string nombre, List<Libro> librosPrestados) : this(id, nombre)
@@ -28,16 +29,24 @@ namespace BibliotecaApp
 
         virtual public bool LendBook(Libro l)
         {
+            if(!l.Available)
+            {
+                Console.WriteLine("El libro no se encuentra disponible");
+                return false;
+            }
             LibrosPrestados.Add(l);
+            l.Available = false;
             return true;
         }
 
         internal bool ReturnBook(Libro l)
         {
             //Verify that the book is in the list
-            if (LibrosPrestados.Contains(l))
+            //Try to get book
+            Libro lentBook = LibrosPrestados.Where(x => x.Id == l.Id).First();
+            if (lentBook.Id == l.Id)
             {
-                LibrosPrestados.Remove(l);
+                LibrosPrestados = LibrosPrestados.Where(x => x.Id != l.Id).ToList();
                 l.Available = true;
                 return true;
             }

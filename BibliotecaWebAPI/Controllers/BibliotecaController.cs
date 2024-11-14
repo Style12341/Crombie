@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +11,32 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class BibliotecaController : ControllerBase
     {
+        private readonly BibliotecaService _service = new();
         // GET: api/<BibliotecaController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpPost("lend")]
+        public IActionResult LendBook([FromBody] JsonElement value)
         {
-            return new string[] { "value1", "value2" };
+            var ids = JsonSerializer.Deserialize<BibliotecaOperationDTO>(value);
+            if (ids == null)
+            {
+                return BadRequest("Invalid JSON data.");
+            }
+            if (_service.LendBook(ids))
+                return Ok("Book lent successfully.");
+            return BadRequest("Book lending failed.");
+        }
+        [HttpPost("return")]
+        public IActionResult ReturnBook([FromBody] JsonElement value)
+        {
+            var ids = JsonSerializer.Deserialize<BibliotecaOperationDTO>(value);
+            if (ids == null)
+            {
+                return BadRequest("Invalid JSON data.");
+            }
+            if (_service.ReturnBook(ids))
+                return Ok("Book returned successfully.");
+            return BadRequest("User doesn't have the book to return");
         }
 
-        // GET api/<BibliotecaController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<BibliotecaController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<BibliotecaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BibliotecaController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
