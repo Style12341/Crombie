@@ -3,7 +3,10 @@
 namespace BibliotecaWebAPI.Models
 {
     public class Profesor : Usuario
-    {
+    {   
+        public Profesor(int id, string nombre, List<Libro> librosPrestados) : base(id, nombre, librosPrestados)
+        {
+        }
         public Profesor(int id, string nombre) : base(id, nombre)
         {
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BibliotecaWebAPI.Persistance;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,13 @@ namespace BibliotecaApp
         public int Id { get; set; }
         public string Nombre { get; set; }
 
-        public List<Libro> LibrosPrestados { get; set; } = new List<Libro>();
+        public List<Libro> LibrosPrestados { get; set; } = [];
+        public Usuario() { }
+        public Usuario(int id, string nombre, List<Libro> librosPrestados) : this(id, nombre)
+        {
+            LibrosPrestados = librosPrestados;
+        }
+
         public Usuario(int identifier, string nombre)
         {
             Id = identifier;

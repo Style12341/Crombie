@@ -11,16 +11,19 @@ namespace BibliotecaApp
     {
         public string Titulo { get; set; }
         public string Autor { get; set; }
-        public string Id { get; set; }
-        
+        public int Id { get; set; }
         public bool Available { get; set; } = true;
-        public Libro(string titulo, string autor, string id)
+
+        public Libro() { }
+        public Libro(int id, string titulo, string autor, bool available = true)
         {
             Titulo = titulo;
             Autor = autor;
             Id = id;
+            Available = available;
         }
-        public string GetState()
+
+        public override string? ToString()
         {
             string av = Available ? "SI" : "NO";
             return $"Titulo: {Titulo}, Autor: {Autor}, Id: {Id}, Disponible: {av}";
