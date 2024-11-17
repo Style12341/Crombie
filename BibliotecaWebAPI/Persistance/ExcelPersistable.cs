@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace BibliotecaWebAPI.Persistance
 {
@@ -7,37 +8,37 @@ namespace BibliotecaWebAPI.Persistance
     public abstract class ExcelPersistable<T> where T : class
     {
         protected abstract int WORKSHEET_INDEX { get; }
-        public List<T> GetData()
+        protected List<T> GetData()
         {
             List<List<XLCellValue>> xLCellValues = ExcelReader.GetData(WORKSHEET_INDEX);
             return DeserializeMultiple(xLCellValues);
         }
-        public T GetDataById(int id)
+        protected T GetDataById(int id, int idColumn = -1)
         {
-            var data = ExcelReader.GetDataById(WORKSHEET_INDEX, id);
+            var data = ExcelReader.GetDataById(WORKSHEET_INDEX, id, idColumn + 1);
             if (data.Count == 0)
             {
                 return null;
             }
             return Deserialize(data);
         }
-        public List<T> GetDataByIdsList(List<int> ids)
+        protected List<T> GetDataByIdsList(List<int> ids, int idColumn = -1)
         {
-            List<List<XLCellValue>> xLCellValues = ExcelReader.GetDataByIdsList(WORKSHEET_INDEX,ids);
+            List<List<XLCellValue>> xLCellValues = ExcelReader.GetDataByIdsList(WORKSHEET_INDEX, ids, idColumn + 1);
             return DeserializeMultiple(xLCellValues);
         }
-        public List<T> InsertData(List<T> data)
+        protected List<T> InsertData(List<T> data)
         {
             List<List<XLCellValue>> xLCellValues = ExcelReader.InsertData(WORKSHEET_INDEX, data.Select(Serialize).ToList());
             return DeserializeMultiple(xLCellValues);
         }
 
-        public void UpdateData(T data)
+        protected void UpdateData(T data)
         {
             ExcelReader.UpdateDataById(WORKSHEET_INDEX, Serialize(data));
         }
 
-        public void DeleteDataById(int id)
+        protected void DeleteDataById(int id)
         {
             ExcelReader.DeleteDataById(WORKSHEET_INDEX, id);
         }

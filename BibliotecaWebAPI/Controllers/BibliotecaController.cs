@@ -37,6 +37,37 @@ namespace BibliotecaWebAPI.Controllers
                 return Ok("Book returned successfully.");
             return BadRequest("User doesn't have the book to return");
         }
+        [HttpGet("history")]
+        public IEnumerable<string> GetHistory()
+        {
+            var history = _service.GetHistory();
+            if(history == null)
+            {
+                return ["No history found."];
+            }
+            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+        }
+
+        [HttpGet("history/book/{id}")]
+        public IEnumerable<string> GetBookHistory(int id)
+        {
+            var history = _service.GetBookHistory(id);
+            if (history == null)
+            {
+                return ["Book not found."];
+            }
+            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+        }
+        [HttpGet("history/user/{id}")]
+        public IEnumerable<string> GetUserHistory(int id)
+        {
+            var history = _service.GetUserHistory(id);
+            if(history == null)
+            {
+                return ["User not found."];
+            }
+            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+        }
 
     }
 }

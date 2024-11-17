@@ -31,16 +31,17 @@ namespace BibliotecaWebAPI.Persistance
             }
             return data;
         }
-        public static List<XLCellValue> GetDataById(int worksheetIndex, int id)
+        public static List<XLCellValue> GetDataById(int worksheetIndex, int id, int idColumn = 0)
         {
             using var workbook = new XLWorkbook(FilePath);
             var worksheet = workbook.Worksheet(worksheetIndex);
             int lastRowUsed = worksheet.LastRowUsed().RowNumber();
             int lastColumnUsed = worksheet.LastColumnUsed().ColumnNumber();
+            idColumn = idColumn == 0 ? 1 : idColumn;
             List<XLCellValue> data = [];
             for (int i = DATA_START_ROW; i <= lastRowUsed; i++)
             {
-                int read_id = (int)worksheet.Cell(i, 1).Value;
+                int read_id = (int)worksheet.Cell(i, idColumn).Value;
                 if (read_id != id)
                     continue;
                 for (int j = 1; j <= lastColumnUsed; j++)
@@ -51,16 +52,17 @@ namespace BibliotecaWebAPI.Persistance
             }
             return data;
         }
-        public static List<List<XLCellValue>> GetDataByIdsList(int worksheetIndex, List<int> ids)
+        public static List<List<XLCellValue>> GetDataByIdsList(int worksheetIndex, List<int> ids,int idColumn = 0)
         {
             using var workbook = new XLWorkbook(FilePath);
             var worksheet = workbook.Worksheet(worksheetIndex);
             int lastRowUsed = worksheet.LastRowUsed().RowNumber();
             int lastColumnUsed = worksheet.LastColumnUsed().ColumnNumber();
+            idColumn = idColumn == 0 ? 1 : idColumn;
             List<List<XLCellValue>> data = [];
             for (int i = DATA_START_ROW; i <= lastRowUsed; i++)
             {
-                int read_id = (int)worksheet.Cell(i, 1).Value;
+                int read_id = (int)worksheet.Cell(i, idColumn).Value;
                 if (!ids.Contains(read_id))
                     continue;
                 List<XLCellValue> row = [];
