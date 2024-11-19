@@ -22,4 +22,7 @@ One may return books through the /biblioteca/return endpoint.
 History can be checked through the /biblioteca/history endpoint.
 
 History can be checked by user or book through /biblioteca/user/{id} or /biblioteca/book/{id}
+## Excel
+This web api is made to use an excel file as a database:
+[BibliotecaBaseDatos.xlsx](https://github.com/user-attachments/files/17808106/BibliotecaBaseDatos.xlsx)
 
