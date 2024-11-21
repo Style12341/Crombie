@@ -1,5 +1,5 @@
 ﻿using BibliotecaWebAPI.Models;
-using BibliotecaWebAPI.Services;
+using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -11,7 +11,11 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class BibliotecaController : ControllerBase
     {
-        private readonly BibliotecaService _service = new();
+        private readonly IBibliotecaService _service;
+        public BibliotecaController(IBibliotecaService service)
+        {
+            _service = service;
+        }
         // GET: api/<BibliotecaController>
         [HttpPost("lend")]
         public IActionResult LendBook([FromBody] JsonElement value)

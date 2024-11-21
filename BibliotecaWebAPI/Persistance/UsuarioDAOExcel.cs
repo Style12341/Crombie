@@ -1,5 +1,6 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Persistance.Interfaces;
 using ClosedXML.Excel;
 
 namespace BibliotecaWebAPI.Persistance

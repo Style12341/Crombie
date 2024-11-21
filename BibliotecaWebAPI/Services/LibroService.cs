@@ -1,11 +1,16 @@
 ﻿using BibliotecaApp;
-using BibliotecaWebAPI.Persistance;
+using BibliotecaWebAPI.Persistance.Interfaces;
+using BibliotecaWebAPI.Services.Interfaces;
 
 namespace BibliotecaWebAPI.Services
 {
-    public class LibroService
+    public class LibroService : ILibroService
     {
-        private readonly IDAO<Libro> _libroDAO = new LibroDAOExcel();
+        private readonly IDAO<Libro> _libroDAO;
+        public LibroService(IDAO<Libro> libroDAO)
+        {
+            _libroDAO = libroDAO;
+        }
         public Libro CreateBook(Libro libro)
         {
             return _libroDAO.Create(libro);
@@ -33,7 +38,7 @@ namespace BibliotecaWebAPI.Services
             {
                 throw new Exception("The book does not exist");
             }
-            if(!libro.Available)
+            if (!libro.Available)
             {
                 throw new Exception("The book is not available it can't be deleted");
             }

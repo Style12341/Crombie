@@ -1,6 +1,6 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Models;
-using BibliotecaWebAPI.Services;
+using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -12,7 +12,11 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class EstudianteController : ControllerBase
     {
-        private readonly UsuarioService _service = new UsuarioService();
+        private readonly IUsuarioService _service;
+        public EstudianteController(IUsuarioService service)
+        {
+            _service = service;
+        }
         // GET: api/<EstudianteController>
         [HttpGet]
         public IEnumerable<string> Get()

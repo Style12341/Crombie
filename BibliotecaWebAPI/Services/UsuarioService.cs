@@ -1,12 +1,18 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Models;
-using BibliotecaWebAPI.Persistance;
+using BibliotecaWebAPI.Persistance.Interfaces;
+using BibliotecaWebAPI.Services.Interfaces;
 
 namespace BibliotecaWebAPI.Services
 {
-    public class UsuarioService
+    public class UsuarioService : IUsuarioService
     {
-        private readonly IDAO<Usuario> _usuarioDAO = new UsuarioDAOExcel();
+        private readonly IDAO<Usuario> _usuarioDAO;
+
+        public UsuarioService(IDAO<Usuario> usuarioDAO)
+        {
+            _usuarioDAO = usuarioDAO;
+        }
         public Usuario CreateUser(Usuario usuario)
         {
             return _usuarioDAO.Create(usuario);
@@ -43,7 +49,7 @@ namespace BibliotecaWebAPI.Services
             {
                 throw new Exception("The user does not exist");
             }
-            if(usuario.LibrosPrestados.Count > 0)
+            if (usuario.LibrosPrestados.Count > 0)
             {
                 throw new Exception("The user has books borrowed, it can't be deleted");
             }

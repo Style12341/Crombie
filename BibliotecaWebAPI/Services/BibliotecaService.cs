@@ -1,15 +1,22 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Models;
-using BibliotecaWebAPI.Persistance;
+using BibliotecaWebAPI.Persistance.Interfaces;
+using BibliotecaWebAPI.Services.Interfaces;
 using System.Net;
 
 namespace BibliotecaWebAPI.Services
 {
-    public class BibliotecaService
+    public class BibliotecaService : IBibliotecaService
     {
-        private static LibroService _libroService = new LibroService();
-        private static UsuarioService _usuarioService = new UsuarioService();
-        private static BibliotecaHistoryDAO _historyDAO = new BibliotecaHistoryDAO();
+        private readonly ILibroService _libroService;
+        private readonly IUsuarioService _usuarioService;
+        private readonly IBibliotecaHistoryDAO _historyDAO;
+        public BibliotecaService(ILibroService libroService, IUsuarioService usuarioService, IBibliotecaHistoryDAO historyDao)
+        {
+            _libroService = libroService;
+            _usuarioService = usuarioService;
+            _historyDAO = historyDao;
+        }
         public bool LendBook(BibliotecaOperationDTO ids)
         {
             Usuario user = _usuarioService.GetUser(ids.user_id);
@@ -65,7 +72,7 @@ namespace BibliotecaWebAPI.Services
             return history;
         }
 
-        private static List<BibliotecaHistory> ParseDTOs(List<BibliotecaHistoryDTO> historyDTO)
+        private List<BibliotecaHistory> ParseDTOs(List<BibliotecaHistoryDTO> historyDTO)
         {
             List<BibliotecaHistory> history = new();
             Dictionary<int, Usuario> users = new();

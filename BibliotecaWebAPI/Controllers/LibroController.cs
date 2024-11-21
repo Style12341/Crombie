@@ -1,6 +1,6 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Persistance;
-using BibliotecaWebAPI.Services;
+using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -11,7 +11,11 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class LibroController : ControllerBase
     {
-        private readonly LibroService _service = new LibroService();
+        private readonly ILibroService _service;
+        public LibroController(ILibroService service)
+        {
+            _service = service;
+        }
 
         // GET: api/<LibroController>
         [HttpGet]

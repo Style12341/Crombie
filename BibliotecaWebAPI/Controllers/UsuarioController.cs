@@ -1,5 +1,5 @@
 ﻿using BibliotecaApp;
-using BibliotecaWebAPI.Services;
+using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -11,7 +11,11 @@ namespace BibliotecaWebAPI.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly UsuarioService _service = new UsuarioService();
+        private readonly IUsuarioService _service;
+        public UsuarioController(IUsuarioService service)
+        {
+            _service = service;
+        }
         // GET: api/<UsuarioController>
         [HttpGet]
         public IEnumerable<string> Get()

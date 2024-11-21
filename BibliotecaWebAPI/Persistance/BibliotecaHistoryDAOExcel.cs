@@ -1,9 +1,10 @@
 ﻿using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Persistance.Interfaces;
 using ClosedXML.Excel;
 
 namespace BibliotecaWebAPI.Persistance
 {
-    public class BibliotecaHistoryDAO : ExcelPersistable<BibliotecaHistoryDTO>, IDAO<BibliotecaHistoryDTO>
+    public class BibliotecaHistoryDAOExcel : ExcelPersistable<BibliotecaHistoryDTO>, IBibliotecaHistoryDAO
     {
 
         protected override int WORKSHEET_INDEX => 2;
