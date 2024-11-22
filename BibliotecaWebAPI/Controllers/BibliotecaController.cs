@@ -18,59 +18,57 @@ namespace BibliotecaWebAPI.Controllers
         }
         // GET: api/<BibliotecaController>
         [HttpPost("lend")]
-        public IActionResult LendBook([FromBody] JsonElement value)
+        public IActionResult LendBook([FromBody] BibliotecaOperationDTO operation)
         {
-            var ids = JsonSerializer.Deserialize<BibliotecaOperationDTO>(value);
-            if (ids == null)
+            if (operation == null)
             {
                 return BadRequest("Invalid JSON data.");
             }
-            if (_service.LendBook(ids))
+            if (_service.LendBook(operation))
                 return Ok("Book lent successfully.");
             return BadRequest("Book lending failed.");
         }
         [HttpPost("return")]
-        public IActionResult ReturnBook([FromBody] JsonElement value)
+        public IActionResult ReturnBook([FromBody] BibliotecaOperationDTO operation)
         {
-            var ids = JsonSerializer.Deserialize<BibliotecaOperationDTO>(value);
-            if (ids == null)
+            if (operation == null)
             {
                 return BadRequest("Invalid JSON data.");
             }
-            if (_service.ReturnBook(ids))
+            if (_service.ReturnBook(operation))
                 return Ok("Book returned successfully.");
             return BadRequest("User doesn't have the book to return");
         }
         [HttpGet("history")]
-        public IEnumerable<string> GetHistory()
+        public IActionResult GetHistory()
         {
             var history = _service.GetHistory();
             if(history == null)
             {
-                return ["No history found."];
+                return NotFound("No history found.");
             }
-            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+            return Ok(history);
         }
 
         [HttpGet("history/book/{id}")]
-        public IEnumerable<string> GetBookHistory(int id)
+        public IActionResult GetBookHistory(int id)
         {
             var history = _service.GetBookHistory(id);
             if (history == null)
             {
-                return ["Book not found."];
+                return NotFound($"Book with id: {id} not found");
             }
-            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+            return Ok(history);
         }
         [HttpGet("history/user/{id}")]
-        public IEnumerable<string> GetUserHistory(int id)
+        public IActionResult GetUserHistory(int id)
         {
             var history = _service.GetUserHistory(id);
             if(history == null)
             {
-                return ["User not found."];
+                return NotFound($"User with id: {id} not found");
             }
-            return history.Select(h => JsonSerializer.Serialize<BibliotecaHistory>(h)).ToList();
+            return Ok(history);
         }
 
     }

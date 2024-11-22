@@ -18,31 +18,34 @@ namespace BibliotecaWebAPI.Controllers
         }
         // GET: api/<ProfesorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
             List<Profesor> profesores = _service.GetAllProffesors();
             if (profesores.Count == 0)
             {
-                return new List<string> { "No hay profesores" };
+                return NotFound("No hay profesores");
             }
-            return profesores.Select(e => JsonSerializer.Serialize<Profesor>(e));
+            return Ok(profesores);
         }
 
         // GET api/<ProfesorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
             Profesor prof = _service.GetProfessorById(id);
-            return JsonSerializer.Serialize<Profesor>(prof);
+            if (prof == null)
+            {
+                return NotFound("Profesor no encontrado");
+            }
+            return Ok(prof);
         }
 
         // POST api/<ProfesorController>
         [HttpPost]
-        public IActionResult Post([FromBody] JsonElement value)
+        public IActionResult Post([FromBody] Profesor prof)
         {
             try
             {
-                var prof = JsonSerializer.Deserialize<Profesor>(value);
                 if (prof == null)
                 {
                     return BadRequest("Invalid JSON data.");
@@ -58,11 +61,10 @@ namespace BibliotecaWebAPI.Controllers
 
         // PUT api/<ProfesorController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] JsonElement value)
+        public IActionResult Put(int id, [FromBody] Profesor prof)
         {
             try
             {
-                var prof = JsonSerializer.Deserialize<Profesor>(value.GetRawText());
                 if (prof == null)
                 {
                     return BadRequest("Invalid JSON data.");

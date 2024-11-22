@@ -19,35 +19,36 @@ namespace BibliotecaWebAPI.Controllers
 
         // GET: api/<LibroController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
             List<Libro> libros = _service.GetAllBooks();
             if (libros.Count == 0)
             {
-                return new List<string> { "No hay libros" };
+                return NotFound("No books");
             }
-            return libros.Select(libro => JsonSerializer.Serialize<Libro>(libro));
+            
+            return Ok(libros);
         }
 
         // GET api/<LibroController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
             Libro? libro = _service.GetBook(id);
             if (libro == null)
             {
-                return "No se encontró el libro";
+                return NotFound("Book not found.");
             }
-            return JsonSerializer.Serialize<Libro>(libro);
+            return Ok(JsonSerializer.Serialize<Libro>(libro));
         }
 
         // POST api/<LibroController>
         [HttpPost]
-        public IActionResult Post([FromBody] JsonElement value)
+        public IActionResult Post([FromBody] Libro value)
         {
             try
             {
-                var libro = JsonSerializer.Deserialize<Libro>(value.GetRawText());
+                var libro = value;
                 if (libro == null)
                 {
                     return BadRequest("Invalid JSON data.");
@@ -63,18 +64,17 @@ namespace BibliotecaWebAPI.Controllers
 
         // PUT api/<LibroController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] JsonElement value)
+        public IActionResult Put(int id, [FromBody] Libro libro)
         {
             try
             {
-                var libro = JsonSerializer.Deserialize<Libro>(value.GetRawText());
                 if (libro == null)
                 {
                     return BadRequest("Invalid JSON data.");
                 }
                 libro.Id = id;
                 _service.UpdateBook(libro);
-                return Ok("Libro updated successfully.");
+                return Ok(libro);
             }
             catch (JsonException ex)
             {
@@ -94,7 +94,7 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-            return Ok("Libro deleted successfully.");
+            return NoContent();
         }
     }
 }

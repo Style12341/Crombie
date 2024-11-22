@@ -18,27 +18,27 @@ namespace BibliotecaWebAPI.Controllers
         }
         // GET: api/<UsuarioController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
 
             List<Usuario> usuarios = _service.GetAllUsers();
             if (usuarios.Count == 0)
             {
-                return new List<string> { "No hay usuarios" };
+                return NotFound("No hay usuarios");
             }
-            return usuarios.Select(u => JsonSerializer.Serialize<Usuario>(u));
+            return Ok(usuarios);
         }
 
         // GET api/<UsuarioController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
            Usuario user = _service.GetUser(id);
             if (user == null)
             {
-                return "No se encontró el usuario";
+                return NotFound("Usuario no encontrado");
             }
-            return JsonSerializer.Serialize<Usuario>(user);
+            return Ok(user);
         }
         // DELETE api/<UsuarioController>/5
         [HttpDelete("{id}")]
@@ -52,7 +52,7 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
-            return Ok("Usuario deleted successfully.");
+            return NoContent();
         }
     }
 }
