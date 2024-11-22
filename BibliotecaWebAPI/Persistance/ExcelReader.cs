@@ -52,7 +52,7 @@ namespace BibliotecaWebAPI.Persistance
             }
             return data;
         }
-        public static List<List<XLCellValue>> GetDataByIdsList(int worksheetIndex, List<int> ids,int idColumn = 0)
+        public static List<List<XLCellValue>> GetDataByIdsList(int worksheetIndex, List<int> ids, int idColumn = 0)
         {
             using var workbook = new XLWorkbook(FilePath);
             var worksheet = workbook.Worksheet(worksheetIndex);
@@ -115,17 +115,12 @@ namespace BibliotecaWebAPI.Persistance
                 {
                     int iExcel = lastRowUsed + i + 1;
                     int jExcel = j + 1;
-                    if (j == 0)
+                    if (j == 0 && (int)data[i][j] <= 0)
                     {
-                        data[i][j] = nextId;
-                        worksheet.Cell(iExcel, jExcel).Value = nextId;
+                        data[i][j] = nextId++;
                     }
-                    else
-                    {
-                        worksheet.Cell(iExcel, jExcel).Value = data[i][j];
-                    }
+                    worksheet.Cell(iExcel, jExcel).Value = data[i][j];
                 }
-                nextId++;
             }
             workbook.Save();
             return data;
