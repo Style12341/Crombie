@@ -1,4 +1,4 @@
-﻿namespace BibliotecaWebAPI.Models
+﻿namespace BibliotecaWebAPI.Models.Dto
 {
     public class BibliotecaOperationDTO
     {

@@ -15,7 +15,6 @@ namespace BibliotecaApp
 
         public abstract string UserType { get;}
         public List<Libro> LibrosPrestados { get; set; } = [];
-        public Usuario() { }
         public Usuario(int id, string nombre, List<Libro> librosPrestados) : this(id, nombre)
         {
             LibrosPrestados = librosPrestados;

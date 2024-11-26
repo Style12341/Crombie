@@ -1,6 +1,6 @@
 ﻿using BibliotecaWebAPI.Persistance;
 
-namespace BibliotecaWebAPI.Models
+namespace BibliotecaWebAPI.Models.Dto
 {
     public class BibliotecaHistoryDTO(int userId, string userName, string action, int bookId)
     {

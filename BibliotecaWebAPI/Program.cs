@@ -1,7 +1,7 @@
 
 using BibliotecaApp;
 using BibliotecaWebAPI.Models;
-using BibliotecaWebAPI.Persistance;
+using BibliotecaWebAPI.Persistance.Dao;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using BibliotecaWebAPI.Services;
 using BibliotecaWebAPI.Services.Interfaces;

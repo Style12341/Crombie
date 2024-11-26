@@ -1,4 +1,4 @@
-﻿using BibliotecaWebAPI.Models;
+﻿using BibliotecaWebAPI.Models.Dto;
 
 namespace BibliotecaWebAPI.Persistance.Interfaces
 {

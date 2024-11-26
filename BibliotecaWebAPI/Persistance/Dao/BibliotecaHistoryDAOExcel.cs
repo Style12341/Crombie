@@ -1,8 +1,9 @@
-﻿using BibliotecaWebAPI.Models;
+﻿using BibliotecaWebAPI.Models.Dto;
+using BibliotecaWebAPI.Persistance.ExcelUtils;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using ClosedXML.Excel;
 
-namespace BibliotecaWebAPI.Persistance
+namespace BibliotecaWebAPI.Persistance.Dao
 {
     public class BibliotecaHistoryDAOExcel : ExcelPersistable<BibliotecaHistoryDTO>, IBibliotecaHistoryDAO
     {

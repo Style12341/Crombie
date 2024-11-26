@@ -1,4 +1,4 @@
-﻿using BibliotecaWebAPI.Models;
+﻿using BibliotecaWebAPI.Models.Dto;
 using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
