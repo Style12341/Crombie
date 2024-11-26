@@ -1,4 +1,5 @@
 ﻿using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Models.Dto;
 using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -42,14 +43,16 @@ namespace BibliotecaWebAPI.Controllers
 
         // POST api/<ProfesorController>
         [HttpPost]
-        public IActionResult Post([FromBody] Profesor prof)
+        public IActionResult Post([FromBody] ProfesorDTO dto)
         {
             try
             {
-                if (prof == null)
+                if (dto == null)
                 {
                     return BadRequest("Invalid JSON data.");
                 }
+                Profesor prof = new Profesor();
+                prof.Nombre = dto.Nombre;
                 prof = _service.CreateProfesor(prof);
                 return Ok(prof);
             }
@@ -61,14 +64,16 @@ namespace BibliotecaWebAPI.Controllers
 
         // PUT api/<ProfesorController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Profesor prof)
+        public IActionResult Put(int id, [FromBody] ProfesorDTO dto)
         {
             try
             {
-                if (prof == null)
+                if (dto == null)
                 {
                     return BadRequest("Invalid JSON data.");
                 }
+                Profesor prof = new Profesor();
+                prof.Nombre = dto.Nombre;
                 prof.Id = id;
                 if (_service.UpdateUser(prof) == null)
                 {

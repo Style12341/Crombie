@@ -1,4 +1,5 @@
 ﻿using BibliotecaApp;
+using BibliotecaWebAPI.Models.Dto;
 using BibliotecaWebAPI.Persistance;
 using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -44,15 +45,18 @@ namespace BibliotecaWebAPI.Controllers
 
         // POST api/<LibroController>
         [HttpPost]
-        public IActionResult Post([FromBody] Libro value)
+        public IActionResult Post([FromBody] LibroDTO dto)
         {
             try
             {
-                var libro = value;
-                if (libro == null)
+                if (dto == null)
                 {
                     return BadRequest("Invalid JSON data.");
                 }
+                Libro libro = new Libro();
+                libro.Titulo = dto.Titulo;
+                libro.Autor = dto.Autor;
+                libro.Available = dto.Available;
                 libro = _service.CreateBook(libro);
                 return Ok(JsonSerializer.Serialize<Libro>(libro));
             }
@@ -64,14 +68,18 @@ namespace BibliotecaWebAPI.Controllers
 
         // PUT api/<LibroController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Libro libro)
+        public IActionResult Put(int id, [FromBody] LibroDTO dto)
         {
             try
             {
-                if (libro == null)
+                if (dto == null)
                 {
                     return BadRequest("Invalid JSON data.");
                 }
+                Libro libro = new Libro();
+                libro.Titulo = dto.Titulo;
+                libro.Autor = dto.Autor;
+                libro.Available = dto.Available;
                 libro.Id = id;
                 if (_service.UpdateBook(libro) == null)
                 {

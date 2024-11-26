@@ -1,5 +1,6 @@
 ﻿using BibliotecaApp;
 using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Models.Dto;
 using BibliotecaWebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -47,7 +48,7 @@ namespace BibliotecaWebAPI.Controllers
 
         // POST api/<EstudianteController>
         [HttpPost]
-        public IActionResult Post([FromBody] Estudiante est)
+        public IActionResult Post([FromBody] EstudianteDTO est)
         {
             try
             {
@@ -55,8 +56,10 @@ namespace BibliotecaWebAPI.Controllers
                 {
                     return BadRequest("Invalid JSON data.");
                 }
-                est = _service.CreateEstudiante(est);
-                return Ok(est);
+                Estudiante estudiante = new Estudiante();
+                estudiante.Nombre = est.Nombre;
+                estudiante = _service.CreateEstudiante(estudiante);
+                return Ok(estudiante);
             }
             catch (JsonException ex)
             {
@@ -70,7 +73,7 @@ namespace BibliotecaWebAPI.Controllers
 
         // PUT api/<EstudianteController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Estudiante est)
+        public IActionResult Put(int id, [FromBody] EstudianteDTO est)
         {
             try
             {
@@ -78,8 +81,10 @@ namespace BibliotecaWebAPI.Controllers
                 {
                     return BadRequest("Invalid JSON data.");
                 }
-                est.Id = id;
-                if (_service.UpdateUser(est) == null)
+                Estudiante estudiante = new Estudiante();
+                estudiante.Nombre = est.Nombre;
+                estudiante.Id = id;
+                if (_service.UpdateUser(estudiante) == null)
                 {
                     return NotFound("Student not found.");
                 }

@@ -10,9 +10,6 @@ namespace BibliotecaWebAPI.Models
         public Estudiante(int id, string nombre, List<Libro> librosPrestados) : base(id, nombre, librosPrestados)
         {
         }
-        public Estudiante(int id, string nombre) : base(id, nombre)
-        {
-        }
 
         override public bool LendBook(Libro book)
         {
