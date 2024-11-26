@@ -1,5 +1,7 @@
 
 using BibliotecaApp;
+using BibliotecaWebAPI.Logging;
+using BibliotecaWebAPI.Middlewares;
 using BibliotecaWebAPI.Models;
 using BibliotecaWebAPI.Persistance.Dao;
 using BibliotecaWebAPI.Persistance.Interfaces;
@@ -26,6 +28,9 @@ namespace BibliotecaWebAPI
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
             builder.Services.AddScoped<ILibroService, LibroService>();
             builder.Services.AddScoped<IBibliotecaService, BibliotecaService>();
+            var logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "api.log");
+            Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
+            builder.Services.AddSingleton(new FileLogger(logFilePath));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,6 +44,7 @@ namespace BibliotecaWebAPI
 
             app.UseAuthorization();
 
+            app.UseMiddleware<ErrorLoggingMiddleware>();
 
             app.MapControllers();
 
