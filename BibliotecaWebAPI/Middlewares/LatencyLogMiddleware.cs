@@ -8,12 +8,11 @@ namespace BibliotecaWebAPI.Middlewares
         private readonly RequestDelegate _next; //Continua con el siguiente middleware
         private readonly ILogger _logger;
         private readonly FileLogger _fileLogger;
-        public LatencyLogMiddleware(RequestDelegate next, ILoggerFactory
-        loggerFactory, FileLogger fileLogger)
+        public LatencyLogMiddleware(RequestDelegate next, ILogger<LatencyLogMiddleware> logger, FileLogger fileLogger)
         {
             _next = next;
             _fileLogger = fileLogger;
-            _logger = loggerFactory.CreateLogger(typeof(LatencyLogMiddleware));
+            _logger = logger;
         }
         public async Task Invoke(HttpContext context)
         {
