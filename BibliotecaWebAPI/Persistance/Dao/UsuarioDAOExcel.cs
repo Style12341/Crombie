@@ -1,4 +1,5 @@
 ﻿using BibliotecaApp;
+using BibliotecaWebAPI.Exceptions;
 using BibliotecaWebAPI.Models;
 using BibliotecaWebAPI.Persistance.ExcelUtils;
 using BibliotecaWebAPI.Persistance.Interfaces;
@@ -27,7 +28,14 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
         public Usuario Update(Usuario obj)
         {
-            UpdateData(obj);
+            try
+            {
+                UpdateData(obj);
+            }
+            catch (ExcelRowNotFoundException)
+            {
+                return null;
+            }
             return obj;
         }
 

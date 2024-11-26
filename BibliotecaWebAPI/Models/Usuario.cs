@@ -13,8 +13,10 @@ namespace BibliotecaApp
         public int Id { get; set; }
         public string Nombre { get; set; }
 
-        public abstract string UserType { get;}
+        public abstract string UserType { get; }
         public List<Libro> LibrosPrestados { get; set; } = [];
+
+        public Usuario() { }
         public Usuario(int id, string nombre, List<Libro> librosPrestados) : this(id, nombre)
         {
             LibrosPrestados = librosPrestados;
@@ -28,7 +30,7 @@ namespace BibliotecaApp
 
         virtual public bool LendBook(Libro l)
         {
-            if(!l.Available)
+            if (!l.Available)
             {
                 Console.WriteLine("El libro no se encuentra disponible");
                 return false;

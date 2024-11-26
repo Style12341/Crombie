@@ -62,7 +62,7 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest($"JSON deserialization error: {ex.Message}");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
@@ -79,7 +79,10 @@ namespace BibliotecaWebAPI.Controllers
                     return BadRequest("Invalid JSON data.");
                 }
                 est.Id = id;
-                _service.UpdateUser(est);
+                if (_service.UpdateUser(est) == null)
+                {
+                    return NotFound("Student not found.");
+                }
                 return Ok("Estudiante updated successfully.");
             }
             catch (JsonException ex)

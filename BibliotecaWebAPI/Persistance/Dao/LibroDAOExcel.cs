@@ -1,4 +1,5 @@
 ﻿using BibliotecaApp;
+using BibliotecaWebAPI.Exceptions;
 using BibliotecaWebAPI.Persistance.ExcelUtils;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using ClosedXML.Excel;
@@ -19,7 +20,12 @@ namespace BibliotecaWebAPI.Persistance.Dao
         }
         public Libro Update(Libro obj)
         {
-            UpdateData(obj);
+            try { UpdateData(obj); }
+            catch (ExcelRowNotFoundException e)
+            {
+                return null;
+            }
+
             return obj;
         }
         public void Delete(int id)

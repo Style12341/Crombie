@@ -1,4 +1,5 @@
-﻿using ClosedXML;
+﻿using BibliotecaWebAPI.Exceptions;
+using ClosedXML;
 using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Office2010.Excel;
 
@@ -92,11 +93,8 @@ namespace BibliotecaWebAPI.Persistance.ExcelUtils
                     break;
                 }
             }
-            if (!found)
-            {
-                throw new Exception("The object was not found");
-            }
-            workbook.Save();
+            if (found)
+                workbook.Save();
         }
         public static List<List<XLCellValue>> InsertData(int worksheetIndex, List<List<XLCellValue>> data)
         {
@@ -150,7 +148,7 @@ namespace BibliotecaWebAPI.Persistance.ExcelUtils
             }
             if (!found)
             {
-                throw new Exception("The object was not found");
+                throw new ExcelRowNotFoundException("Row not found");
             }
 
         }

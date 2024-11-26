@@ -22,7 +22,8 @@ namespace BibliotecaWebAPI.Middlewares
             {
                 _logger.LogError($"Error procesando la peticion: {context.Request.Method} {context.Request.Path}", ex);
                 context.Response.StatusCode = 500;
-                await context.Response.WriteAsync("Error interno del servidor");
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync("Ha ocurrido un error en el servidor");
             }
         }
     }

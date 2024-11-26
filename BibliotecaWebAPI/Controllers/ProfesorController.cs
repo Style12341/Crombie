@@ -70,7 +70,10 @@ namespace BibliotecaWebAPI.Controllers
                     return BadRequest("Invalid JSON data.");
                 }
                 prof.Id = id;
-                _service.UpdateUser(prof);
+                if (_service.UpdateUser(prof) == null)
+                {
+                    return NotFound("Professor not found.");
+                }
                 return Ok("Profesor updated successfully.");
             }
             catch (JsonException ex)

@@ -14,6 +14,7 @@ namespace BibliotecaApp
         public int Id { get; set; }
         public bool Available { get; set; } = true;
 
+        public Libro() { }
         public Libro(int id, string titulo, string autor, bool available = true)
         {
             Titulo = titulo;

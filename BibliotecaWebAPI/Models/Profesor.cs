@@ -5,6 +5,7 @@ namespace BibliotecaWebAPI.Models
     public class Profesor : Usuario
     {
         public override string UserType { get; } = "Profesor";
+        public Profesor() : base() { }
         public Profesor(int id, string nombre, List<Libro> librosPrestados) : base(id, nombre, librosPrestados)
         {
         }

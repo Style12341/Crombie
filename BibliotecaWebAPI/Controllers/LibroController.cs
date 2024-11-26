@@ -26,7 +26,7 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return NotFound("No books");
             }
-            
+
             return Ok(libros);
         }
 
@@ -73,7 +73,10 @@ namespace BibliotecaWebAPI.Controllers
                     return BadRequest("Invalid JSON data.");
                 }
                 libro.Id = id;
-                _service.UpdateBook(libro);
+                if (_service.UpdateBook(libro) == null)
+                {
+                    return NotFound("Book not found.");
+                }
                 return Ok(libro);
             }
             catch (JsonException ex)
