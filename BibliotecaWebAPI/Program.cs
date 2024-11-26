@@ -48,6 +48,7 @@ namespace BibliotecaWebAPI
 
             app.UseAuthorization();
 
+            app.UseMiddleware<LatencyLogMiddleware>();
             app.UseMiddleware<ErrorLoggingMiddleware>();
 
             app.MapControllers();
