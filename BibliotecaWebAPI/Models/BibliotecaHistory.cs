@@ -1,5 +1,4 @@
-﻿using BibliotecaApp;
-using BibliotecaWebAPI.Persistance;
+﻿using BibliotecaWebAPI.Persistance;
 
 namespace BibliotecaWebAPI.Models
 {

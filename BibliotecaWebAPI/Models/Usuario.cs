@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BibliotecaApp
+namespace BibliotecaWebAPI.Models
 {
     public abstract class Usuario
     {

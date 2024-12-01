@@ -1,4 +1,4 @@
-﻿using BibliotecaApp;
+﻿using BibliotecaWebAPI.Models;
 
 namespace BibliotecaWebAPI.Services.Interfaces
 {

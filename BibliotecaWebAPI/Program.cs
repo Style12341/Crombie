@@ -1,5 +1,5 @@
 
-using BibliotecaApp;
+using BibliotecaWebAPI;
 using BibliotecaWebAPI.Logging;
 using BibliotecaWebAPI.Middlewares;
 using BibliotecaWebAPI.Models;
@@ -7,6 +7,7 @@ using BibliotecaWebAPI.Persistance.Dao;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using BibliotecaWebAPI.Services;
 using BibliotecaWebAPI.Services.Interfaces;
+using Dapper;
 
 namespace BibliotecaWebAPI
 {
@@ -24,7 +25,7 @@ namespace BibliotecaWebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IDAO<Usuario>, UsuarioDAOExcel>();
-            builder.Services.AddScoped<IDAO<Libro>, LibroDAOExcel>();
+            builder.Services.AddScoped<IDAO<Libro>, LibroDAOSql>();
             builder.Services.AddScoped<IBibliotecaHistoryDAO, BibliotecaHistoryDAOExcel>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
             builder.Services.AddScoped<ILibroService, LibroService>();
@@ -32,8 +33,8 @@ namespace BibliotecaWebAPI
             var logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "api.log");
             Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
             builder.Services.AddSingleton(new FileLogger(logFilePath));
+            SqlMapper.AddTypeHandler(new BoolTypeHandler());
             var app = builder.Build();
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

@@ -1,4 +1,4 @@
-﻿using BibliotecaApp;
+﻿using BibliotecaWebAPI.Models;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using BibliotecaWebAPI.Services.Interfaces;
 

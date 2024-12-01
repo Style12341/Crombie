@@ -1,6 +1,4 @@
-﻿using BibliotecaApp;
-
-namespace BibliotecaWebAPI.Models
+﻿namespace BibliotecaWebAPI.Models
 {
     public class Estudiante : Usuario
     {
