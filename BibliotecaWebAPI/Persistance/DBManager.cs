@@ -2,12 +2,20 @@
 
 namespace BibliotecaWebAPI.Persistance
 {
-    public static class DBManager
+    public class DBManager
     {
-        public static SqlConnection GetConnection()
+        private readonly IConfiguration _configuration;
+        private readonly string _connectionString;
+
+        public DBManager(IConfiguration configuration)
         {
-            var connectionString = "data source=BMLP;initial catalog=BibliotecaWeb;trusted_connection=true;Integrated Security=true; TrustServerCertificate=True";
-            return new SqlConnection(connectionString);
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("DefaultConnection");
+        }
+
+        public SqlConnection GetConnection()
+        {
+            return new SqlConnection(_connectionString);
         }
     }
 }

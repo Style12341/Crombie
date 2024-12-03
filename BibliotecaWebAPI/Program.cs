@@ -3,6 +3,7 @@ using BibliotecaWebAPI;
 using BibliotecaWebAPI.Logging;
 using BibliotecaWebAPI.Middlewares;
 using BibliotecaWebAPI.Models;
+using BibliotecaWebAPI.Persistance;
 using BibliotecaWebAPI.Persistance.Dao;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using BibliotecaWebAPI.Services;
@@ -32,6 +33,7 @@ namespace BibliotecaWebAPI
             var logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "api.log");
             Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
             builder.Services.AddSingleton(new FileLogger(logFilePath));
+            builder.Services.AddSingleton<DBManager>();
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

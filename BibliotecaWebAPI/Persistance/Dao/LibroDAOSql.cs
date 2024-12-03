@@ -8,7 +8,12 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
     public class LibroDAOSql : IDAO<Libro>
     {
-        private readonly SqlConnection _conn = DBManager.GetConnection();
+        private readonly SqlConnection _conn;
+
+        public LibroDAOSql(DBManager dbManager)
+        {
+            _conn = dbManager.GetConnection();
+        }
         public Libro Create(Libro obj)
         {
             throw new NotImplementedException();
