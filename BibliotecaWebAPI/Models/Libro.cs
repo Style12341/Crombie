@@ -13,6 +13,23 @@ namespace BibliotecaWebAPI.Models
         public string Autor { get; set; }
         public int Id { get; set; }
         public bool Available { get; set; } = true;
+        public Usuario Prestante
+        {
+            get; set
+            {
+                if (value is Usuario user)
+                {
+                    Available = false;
+                    Prestante = user;
+                }
+                else
+                {
+                    Available = true;
+                    Prestante = null;
+                }
+            }
+        }
+
 
         public Libro() { }
         public Libro(int id, string titulo, string autor, bool available = true)
