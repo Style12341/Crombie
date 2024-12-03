@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -13,19 +14,24 @@ namespace BibliotecaWebAPI.Models
         public string Autor { get; set; }
         public int Id { get; set; }
         public bool Available { get; set; } = true;
+        [AllowNull]
+        private Usuario _prestante;
+        private int prestante_id;
+        [AllowNull]
         public Usuario Prestante
         {
-            get; set
+            get => _prestante; set
             {
                 if (value is Usuario user)
                 {
                     Available = false;
-                    Prestante = user;
+                    _prestante = user;
+                    prestante_id = user.Id;
                 }
                 else
                 {
                     Available = true;
-                    Prestante = null;
+                    _prestante = null;
                 }
             }
         }

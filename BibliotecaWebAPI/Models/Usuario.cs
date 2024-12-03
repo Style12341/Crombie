@@ -36,7 +36,7 @@ namespace BibliotecaWebAPI.Models
                 return false;
             }
             LibrosPrestados.Add(l);
-            l.Available = false;
+            l.Prestante = this;
             return true;
         }
 
@@ -48,7 +48,7 @@ namespace BibliotecaWebAPI.Models
             if (lentBook.Id == l.Id)
             {
                 LibrosPrestados = LibrosPrestados.Where(x => x.Id != l.Id).ToList();
-                l.Available = true;
+                l.Prestante = null;
                 return true;
             }
             Console.WriteLine("El usuario ingresado no posee el libro");
