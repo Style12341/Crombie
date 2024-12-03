@@ -7,7 +7,6 @@ using BibliotecaWebAPI.Persistance.Dao;
 using BibliotecaWebAPI.Persistance.Interfaces;
 using BibliotecaWebAPI.Services;
 using BibliotecaWebAPI.Services.Interfaces;
-using Dapper;
 
 namespace BibliotecaWebAPI
 {
@@ -33,7 +32,6 @@ namespace BibliotecaWebAPI
             var logFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs", "api.log");
             Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
             builder.Services.AddSingleton(new FileLogger(logFilePath));
-            SqlMapper.AddTypeHandler(new BoolTypeHandler());
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
