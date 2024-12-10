@@ -29,7 +29,7 @@ namespace BibliotecaWebAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IDAO<Usuario>, UsuarioDAOExcel>();
+            builder.Services.AddScoped<IDAO<Usuario>, UsuarioDAOSql>();
             builder.Services.AddScoped<IDAO<Libro>, LibroDAOSql>();
             builder.Services.AddScoped<IBibliotecaHistoryDAO, BibliotecaHistoryDAOExcel>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
