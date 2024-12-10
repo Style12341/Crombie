@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Dapper;
+using Microsoft.Data.SqlClient;
 
 namespace BibliotecaWebAPI.Persistance
 {
@@ -13,6 +14,14 @@ namespace BibliotecaWebAPI.Persistance
             _connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
+        public void DeleteEntity(string sql, int id)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                connection.Execute(sql, new { Id = id });
+            }
+        }
         public SqlConnection GetConnection()
         {
             return new SqlConnection(_connectionString);

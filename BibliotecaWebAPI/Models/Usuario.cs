@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace BibliotecaWebAPI.Models
 {
-    public abstract class Usuario
+    public class Usuario
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
 
-        public abstract string UserType { get; }
+        public virtual string UserType { get; }
         public List<Libro> LibrosPrestados { get; set; } = [];
 
         public Usuario() { }
