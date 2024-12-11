@@ -42,10 +42,10 @@ namespace BibliotecaWebAPI.Models
 
         internal bool ReturnBook(Libro l)
         {
-            //Verify that the book is in the list
-            //Try to get book
-            Libro lentBook = LibrosPrestados.Where(x => x.Id == l.Id).First();
-            if (lentBook.Id == l.Id)
+            // Verify that the book is in the list
+            // Try to get book
+            Libro? lentBook = LibrosPrestados.FirstOrDefault(x => x.Id == l.Id);
+            if (lentBook != null && lentBook.Id == l.Id)
             {
                 LibrosPrestados = LibrosPrestados.Where(x => x.Id != l.Id).ToList();
                 l.Prestante = null;

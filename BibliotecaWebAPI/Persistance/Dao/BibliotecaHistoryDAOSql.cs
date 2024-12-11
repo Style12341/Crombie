@@ -8,17 +8,15 @@ namespace BibliotecaWebAPI.Persistance.Dao
     public class BibliotecaHistoryDAOSql : IBibliotecaHistoryDAO
     {
         private readonly DBManager _dbManager;
-        private readonly SqlConnection _conn;
 
         public BibliotecaHistoryDAOSql(DBManager dbManager)
         {
             _dbManager = dbManager;
-            _conn = dbManager.GetConnection();
         }
         public BibliotecaHistoryDTO Create(BibliotecaHistoryDTO obj)
         {
-            var sql = @"INSERT INTO ledger (book_id,user_id,action) VALUES (@BookId,@UserId,@Action)";
-            using (var connection = _conn)
+            var sql = @"INSERT INTO ledger (libro_id,usuario_id,accion) VALUES (@BookId,@UserId,@Action)";
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 connection.Execute(sql, obj);
@@ -40,7 +38,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
         {
             var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger";
             IEnumerable<BibliotecaHistoryDTO> history;
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 history = connection.Query<BibliotecaHistoryDTO>(sql);
@@ -57,7 +55,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
         {
             var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger WHERE libro_id=@Id";
             IEnumerable<BibliotecaHistoryDTO> history;
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 history = connection.Query<BibliotecaHistoryDTO>(sql, new { Id = id });
@@ -69,7 +67,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
         {
             var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger WHERE usuario_id=@Id";
             IEnumerable<BibliotecaHistoryDTO> history;
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 history = connection.Query<BibliotecaHistoryDTO>(sql, new { Id = id });

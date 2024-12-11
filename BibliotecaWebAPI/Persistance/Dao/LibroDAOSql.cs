@@ -9,13 +9,11 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
     public class LibroDAOSql : IDAO<Libro>
     {
-        private readonly SqlConnection _conn;
         private readonly DBManager _dbManager;
 
         public LibroDAOSql(DBManager dbManager)
         {
             _dbManager = dbManager;
-            _conn = dbManager.GetConnection();
         }
         public Libro Create(Libro obj)
         {
@@ -27,7 +25,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
                 PrestanteID = obj.Prestante?.Id,
                 Available = obj.Available
             };
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 var id = connection.QuerySingle<int>(sql, parameters);
@@ -50,7 +48,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
                 LEFT JOIN Usuarios AS u ON u.id = l.prestante_id
                 WHERE l.id = @Id";
 
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 var libro = connection.Query<Libro, Usuario, Libro>(
@@ -78,7 +76,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
                 FROM Libros AS l
                 LEFT JOIN Usuarios AS u ON u.id = l.prestante_id";
             IEnumerable<Libro> libros;
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 libros = connection.Query<Libro, Usuario, Libro>(
@@ -105,7 +103,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
                 LEFT JOIN Usuarios AS u ON u.id = l.prestante_id
                 WHERE l.id IN @Ids";
             IEnumerable<Libro> libros;
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 libros = connection.Query<Libro, Usuario, Libro>(
@@ -127,7 +125,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
         public Libro Update(Libro obj)
         {
             var sql = @"UPDATE libros SET titulo=@Titulo,autor=@Autor,prestante_id=@PrestanteID,available=@Available WHERE id=@Id";
-            using (var connection = _conn)
+            using (var connection = _dbManager.GetConnection())
             {
                 connection.Open();
                 using (var transaction = connection.BeginTransaction())
