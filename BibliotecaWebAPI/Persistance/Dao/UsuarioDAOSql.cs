@@ -44,7 +44,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
             using (var connection = _conn)
             {
                 connection.Open();
-                var tempUser = connection.QuerySingle<Usuario>(sql);
+                var tempUser = connection.QuerySingle<Usuario>(sql, new {Id=id});
                 user = UsuarioFactory.CreateUsuarioInstance(tempUser);
             }
             return user;

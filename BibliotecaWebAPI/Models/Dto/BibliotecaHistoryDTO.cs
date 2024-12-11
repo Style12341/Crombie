@@ -2,12 +2,24 @@
 
 namespace BibliotecaWebAPI.Models.Dto
 {
-    public class BibliotecaHistoryDTO(int userId, string userName, string action, int bookId)
+    public class BibliotecaHistoryDTO
     {
-        public int UserId { get; set; } = userId;
-        public string UserName { get; set; } = userName;
-        public string Action { get; set; } = action;
-        public int BookId { get; set; } = bookId;
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Action { get; set; }
+        public int BookId { get; set; }
+
+        public DateTime Fecha { get; set; }
+
+        public BibliotecaHistoryDTO(int userId, string userName, string action, int bookId)
+        {
+            UserId = userId;
+            UserName = userName;
+            Action = action;
+            BookId = bookId;
+        }
+
+        public BibliotecaHistoryDTO() { }
 
         public static BibliotecaHistoryDTO FromHistory(BibliotecaHistory history)
         {

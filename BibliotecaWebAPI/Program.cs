@@ -31,7 +31,7 @@ namespace BibliotecaWebAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IDAO<Usuario>, UsuarioDAOSql>();
             builder.Services.AddScoped<IDAO<Libro>, LibroDAOSql>();
-            builder.Services.AddScoped<IBibliotecaHistoryDAO, BibliotecaHistoryDAOExcel>();
+            builder.Services.AddScoped<IBibliotecaHistoryDAO, BibliotecaHistoryDAOSql>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
             builder.Services.AddScoped<ILibroService, LibroService>();
             builder.Services.AddScoped<IBibliotecaService, BibliotecaService>();
