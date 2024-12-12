@@ -34,10 +34,6 @@ namespace BibliotecaWebAPI.Controllers
         public IActionResult Get(int id)
         {
             Profesor prof = _service.GetProfessorById(id);
-            if (prof == null)
-            {
-                return NotFound("Profesor no encontrado");
-            }
             return Ok(prof);
         }
 
@@ -75,10 +71,7 @@ namespace BibliotecaWebAPI.Controllers
                 Profesor prof = new Profesor();
                 prof.Nombre = dto.Nombre;
                 prof.Id = id;
-                if (_service.UpdateUser(prof) == null)
-                {
-                    return NotFound("Professor not found.");
-                }
+                _service.UpdateUser(prof);
                 return Ok("Profesor updated successfully.");
             }
             catch (JsonException ex)

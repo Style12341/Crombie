@@ -24,9 +24,8 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest("Invalid JSON data.");
             }
-            if (_service.LendBook(operation))
-                return Ok("Book lent successfully.");
-            return BadRequest("Book lending failed.");
+            _service.LendBook(operation);
+            return Ok("Book lent successfully.");
         }
         [HttpPost("return")]
         public IActionResult ReturnBook([FromBody] BibliotecaOperationDTO operation)
@@ -35,18 +34,13 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest("Invalid JSON data.");
             }
-            if (_service.ReturnBook(operation))
-                return Ok("Book returned successfully.");
-            return BadRequest("User doesn't have the book to return");
+            _service.ReturnBook(operation);
+            return Ok("Book returned successfully.");
         }
         [HttpGet("history")]
         public IActionResult GetHistory()
         {
             var history = _service.GetHistory();
-            if(history == null)
-            {
-                return NotFound("No history found.");
-            }
             return Ok(history);
         }
 
@@ -54,20 +48,12 @@ namespace BibliotecaWebAPI.Controllers
         public IActionResult GetBookHistory(int id)
         {
             var history = _service.GetBookHistory(id);
-            if (history == null)
-            {
-                return NotFound($"Book with id: {id} not found");
-            }
             return Ok(history);
         }
         [HttpGet("history/user/{id}")]
         public IActionResult GetUserHistory(int id)
         {
             var history = _service.GetUserHistory(id);
-            if(history == null)
-            {
-                return NotFound($"User with id: {id} not found");
-            }
             return Ok(history);
         }
 

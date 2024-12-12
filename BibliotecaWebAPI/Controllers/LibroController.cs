@@ -27,7 +27,6 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return NotFound("No books");
             }
-
             return Ok(libros);
         }
 
@@ -36,10 +35,6 @@ namespace BibliotecaWebAPI.Controllers
         public IActionResult Get(int id)
         {
             Libro? libro = _service.GetBook(id);
-            if (libro == null)
-            {
-                return NotFound("Book not found.");
-            }
             return Ok(JsonSerializer.Serialize<Libro>(libro));
         }
 
@@ -81,10 +76,7 @@ namespace BibliotecaWebAPI.Controllers
                 libro.Autor = dto.Autor;
                 libro.Available = dto.Available;
                 libro.Id = id;
-                if (_service.UpdateBook(libro) == null)
-                {
-                    return NotFound("Book not found.");
-                }
+                _service.UpdateBook(libro);
                 return Ok(libro);
             }
             catch (JsonException ex)
@@ -97,14 +89,7 @@ namespace BibliotecaWebAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _service.DeleteBook(id);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            _service.DeleteBook(id);
             return NoContent();
         }
     }

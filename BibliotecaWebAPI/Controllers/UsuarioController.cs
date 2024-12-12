@@ -22,10 +22,6 @@ namespace BibliotecaWebAPI.Controllers
         {
 
             List<Usuario> usuarios = _service.GetAllUsers();
-            if (usuarios.Count == 0)
-            {
-                return NotFound("No hay usuarios");
-            }
             return Ok(usuarios);
         }
 
@@ -33,25 +29,14 @@ namespace BibliotecaWebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-           Usuario user = _service.GetUser(id);
-            if (user == null)
-            {
-                return NotFound("Usuario no encontrado");
-            }
+            Usuario user = _service.GetUser(id);
             return Ok(user);
         }
         // DELETE api/<UsuarioController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _service.DeleteUser(id);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            _service.DeleteUser(id);
             return NoContent();
         }
     }

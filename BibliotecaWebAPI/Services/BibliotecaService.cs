@@ -22,7 +22,7 @@ namespace BibliotecaWebAPI.Services
             Usuario user = _usuarioService.GetUser(ids.user_id);
             Libro book = _libroService.GetBook(ids.book_id);
             if (!user.LendBook(book))
-                return false;
+                throw new InvalidOperationException("El usuario no puede prestar más libros");
             var historyDTO = new BibliotecaHistoryDTO
             (
                 user.Id,
@@ -40,7 +40,7 @@ namespace BibliotecaWebAPI.Services
             Usuario user = _usuarioService.GetUser(ids.user_id);
             Libro book = _libroService.GetBook(ids.book_id);
             if (!user.ReturnBook(book))
-                return false;
+                throw new InvalidOperationException("El usuario no posee el libro");
             var historyDTO = new BibliotecaHistoryDTO
             (
                 user.Id,

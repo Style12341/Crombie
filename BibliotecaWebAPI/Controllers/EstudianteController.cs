@@ -34,15 +34,7 @@ namespace BibliotecaWebAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            Estudiante est;
-            try
-            {
-                est = _service.GetStudentById(id);
-            }
-            catch (Exception e)
-            {
-                return NotFound(e.Message);
-            }
+            Estudiante est = _service.GetStudentById(id);
             return Ok(est);
         }
 
@@ -65,10 +57,6 @@ namespace BibliotecaWebAPI.Controllers
             {
                 return BadRequest($"JSON deserialization error: {ex.Message}");
             }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
         }
 
         // PUT api/<EstudianteController>/5
@@ -84,10 +72,7 @@ namespace BibliotecaWebAPI.Controllers
                 Estudiante estudiante = new Estudiante();
                 estudiante.Nombre = est.Nombre;
                 estudiante.Id = id;
-                if (_service.UpdateUser(estudiante) == null)
-                {
-                    return NotFound("Student not found.");
-                }
+                _service.UpdateUser(estudiante);
                 return Ok("Estudiante updated successfully.");
             }
             catch (JsonException ex)
