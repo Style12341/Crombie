@@ -36,7 +36,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
         public List<BibliotecaHistoryDTO> GetAll()
         {
-            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger";
+            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Action FROM ledger";
             IEnumerable<BibliotecaHistoryDTO> history;
             using (var connection = _dbManager.GetConnection())
             {
@@ -53,7 +53,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
         public List<BibliotecaHistoryDTO> GetByBook(int id)
         {
-            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger WHERE libro_id=@Id";
+            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Action FROM ledger WHERE libro_id=@Id";
             IEnumerable<BibliotecaHistoryDTO> history;
             using (var connection = _dbManager.GetConnection())
             {
@@ -65,7 +65,7 @@ namespace BibliotecaWebAPI.Persistance.Dao
 
         public List<BibliotecaHistoryDTO> GetByUser(int id)
         {
-            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Accion FROM ledger WHERE usuario_id=@Id";
+            var sql = @"SELECT usuario_id as UserID, libro_id as BookId, fecha, accion as Action FROM ledger WHERE usuario_id=@Id";
             IEnumerable<BibliotecaHistoryDTO> history;
             using (var connection = _dbManager.GetConnection())
             {
