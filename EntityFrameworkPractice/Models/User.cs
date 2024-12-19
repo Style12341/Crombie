@@ -11,7 +11,6 @@ namespace EntityFrameworkPractice.Models
         [MaxLength(100)]
         public String Email { get; set; } = String.Empty;
         public Boolean IsEmailVerified { get; set; } = false;
-         
         public ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 }
