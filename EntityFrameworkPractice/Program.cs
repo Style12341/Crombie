@@ -1,5 +1,6 @@
 
 using EntityFrameworkPractice.Contexts;
+using EntityFrameworkPractice.Services;
 
 namespace EntityFrameworkPractice
 {
@@ -16,6 +17,7 @@ namespace EntityFrameworkPractice
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSqlServer<EFPContext>(builder.Configuration.GetConnectionString("EFPContext"));
+            builder.Services.AddScoped<IUserService, UserService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,6 +39,7 @@ namespace EntityFrameworkPractice
                     Console.WriteLine("Can't connect to the database");
                 }
             }
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

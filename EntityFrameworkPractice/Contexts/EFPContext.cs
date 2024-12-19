@@ -6,6 +6,7 @@ namespace EntityFrameworkPractice.Contexts
     public class EFPContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
         public EFPContext(DbContextOptions<EFPContext> options) : base(options) { }
 
 

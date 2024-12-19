@@ -6,13 +6,12 @@ namespace EntityFrameworkPractice.Models
     {
         [Key]
         public Guid Id { get; set; }
-        [Required]
         [MaxLength(100)]
-        public String Name { get; set; }
-        [Required]
+        public String Name { get; set; } = String.Empty;
         [MaxLength(100)]
-        public String Email { get; set; }
-        
+        public String Email { get; set; } = String.Empty;
         public Boolean IsEmailVerified { get; set; } = false;
+         
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 }
