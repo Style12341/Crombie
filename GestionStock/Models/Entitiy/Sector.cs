@@ -1,4 +1,4 @@
-﻿namespace GestionStock.Models
+﻿namespace GestionStock.Models.Entitiy
 {
     public class Sector
     {
@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public Guid StoreId { get; set; }
         public Store Store { get; set; }
-        public ICollection<StockProductStore> Stock { get; set; }
+        public ICollection<StockProductStore> Stock { get; set; } = [];
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

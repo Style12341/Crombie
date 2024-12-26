@@ -1,4 +1,4 @@
-﻿namespace GestionStock.Models
+﻿namespace GestionStock.Models.Entitiy
 {
     public class StockLedger
     {
