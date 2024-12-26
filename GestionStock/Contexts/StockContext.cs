@@ -1,5 +1,6 @@
 ﻿using GestionStock.Models;
 using GestionStock.Models.Entitiy;
+using GestionStock.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 namespace GestionStock.Contexts
@@ -103,6 +104,8 @@ namespace GestionStock.Contexts
                 s.Property(s => s.Action).IsRequired();
                 s.Property(s => s.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
+            ///Seeds
+            //modelBuilder.ApplyConfiguration(new CategorySeed());
         }
     }
 }
