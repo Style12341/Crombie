@@ -105,7 +105,12 @@ namespace GestionStock.Contexts
                 s.Property(s => s.CreatedAt).HasDefaultValueSql("GETDATE()");
             });
             ///Seeds
-            //modelBuilder.ApplyConfiguration(new CategorySeed());
+            modelBuilder.ApplyConfiguration(new CategorySeed());
+            modelBuilder.ApplyConfiguration(new ProductSeed());
+            modelBuilder.ApplyConfiguration(new StoreSeed());
+            modelBuilder.ApplyConfiguration(new SectorSeed());
+            modelBuilder.ApplyConfiguration(new StockSeed());
+            modelBuilder.ApplyConfiguration(new LedgerSeed());
         }
     }
 }

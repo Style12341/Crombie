@@ -1,6 +1,6 @@
 ﻿namespace GestionStock.Models.Entitiy
 {
-    public enum Action
+    public enum StockAction
     {
         Add,
         Remove

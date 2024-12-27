@@ -8,7 +8,7 @@
         public int StoreId { get; set; }
         public Store Store { get; set; }
         public int Quantity { get; set; }
-        public Action Action { get; set; }
+        public StockAction Action { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
